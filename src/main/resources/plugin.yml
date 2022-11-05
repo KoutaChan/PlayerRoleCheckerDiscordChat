@@ -1,0 +1,4 @@
+name: DiscordChat
+version: '${project.version}'
+main: net.klnetwork.addons.discordchat.DiscordChat
+api-version: 1.19
