@@ -1,9 +1,9 @@
 package net.klnetwork.addons.discordchat;
 
+import net.klnetwork.addons.discordchat.event.ConsoleWatcher;
 import net.klnetwork.playerrolechecker.api.PlayerRoleCheckerAPI;
 import net.klnetwork.playerrolechecker.api.data.APIHook;
 import net.klnetwork.playerrolechecker.api.data.JoinManager;
-import net.klnetwork.playerrolechecker.api.data.codeapi.CodeAPIHook;
 import net.klnetwork.playerrolechecker.api.data.connector.ConnectorAPIHook;
 import net.klnetwork.playerrolechecker.api.enums.HookedAPIType;
 import net.klnetwork.playerrolechecker.api.utils.Metrics;
@@ -18,29 +18,42 @@ public final class DiscordChat extends JavaPlugin implements APIHook {
     @Override
     public void onLoad() {
         INSTANCE = this;
+
+        if (getConfig().getBoolean("global-settings.console-log")) {
+            ConsoleWatcher.onStart();
+        }
     }
 
     @Override
     public void onEnable() {
+        if (connectHook()) {
+            getConfig().getConfigurationSection("settings").getKeys(false)
+                    .forEach(v -> {
+
+                    });
+        }
         // Plugin startup logic
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        ConsoleWatcher.onStop();
     }
 
     public static DiscordChat getInstance() {
         return INSTANCE;
     }
 
-    public static void connectHook() {
+    public static boolean connectHook() {
         ConnectorAPIHook hook = PlayerRoleCheckerAPI.getConnectorAPI();
+        final boolean connected = hook != null;
 
-        if (hook != null) {
+        if (connected) {
             //Todo: Add Message!
             connectedHook = hook;
         }
+        return connected;
     }
 
     public static ConnectorAPIHook getConnectedHook() {
@@ -74,5 +87,9 @@ public final class DiscordChat extends JavaPlugin implements APIHook {
     @Override
     public HookedAPIType getType() {
         return HookedAPIType.CUSTOM;
+    }
+
+    public boolean isConnected() {
+        return connectedHook != null;
     }
 }

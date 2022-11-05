@@ -1,2 +1,22 @@
+global-settings:
+  console-log: true
+
+log:
+  default-log:
+    advanced-settings:
+      command-log: false
+      console-log: false
+      join-log: true
+      left-log: true
+      chat-log: true
+    channelId: 'CHANNEL_ID_HERE'
+  operator-log:
+    advanced-settings:
+      command-log: true
+      console-log: true
+      join-log: true
+      left-log: true
+      chat-log: true
+    channelId: 'CHANNEL_ID_HERE'
 messages:
   success-hook: 'プレイヤーロールコネクターの接続に成功しました！'

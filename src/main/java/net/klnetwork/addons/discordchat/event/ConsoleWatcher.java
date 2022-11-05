@@ -1,21 +1,16 @@
 package net.klnetwork.addons.discordchat.event;
 
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.core.Filter;
-import org.apache.logging.log4j.core.Layout;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.Logger;
 import org.apache.logging.log4j.core.appender.AbstractAppender;
 import org.apache.logging.log4j.core.layout.PatternLayout;
-import org.bukkit.Bukkit;
 
-import java.io.Serializable;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
+public class ConsoleWatcher extends AbstractAppender {
+    public static ConsoleWatcher currentWatcher = null;
 
-public class ConsoleLogging extends AbstractAppender {
-    protected ConsoleLogging() {
-        super("[PRC] -> ConsoleLogging"
+    protected ConsoleWatcher() {
+        super("[PRCAddons] -> ConsoleWatcher"
                 , null
                 , PatternLayout.newBuilder()
                         .withPattern("[%d{HH:mm:ss} %level]: %msg")
@@ -30,8 +25,19 @@ public class ConsoleLogging extends AbstractAppender {
         //event.getMessage().getFormattedMessage();
     }
 
-    public void startLogging() {
-        Logger logger = (Logger) LogManager.getRootLogger();
-        logger.addAppender(new ConsoleLogging());
+    public static void onStart() {
+        getLogger().addAppender(currentWatcher = new ConsoleWatcher());
+    }
+
+    public static void onStop() {
+        if (currentWatcher == null) {
+            return;
+        }
+        currentWatcher.stop();
+        getLogger().removeAppender(currentWatcher);
+    }
+
+    public static Logger getLogger() {
+        return (Logger) LogManager.getRootLogger();
     }
 }
