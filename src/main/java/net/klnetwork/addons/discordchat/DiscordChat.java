@@ -8,6 +8,7 @@ import net.klnetwork.playerrolechecker.api.data.connector.ConnectorAPIHook;
 import net.klnetwork.playerrolechecker.api.enums.HookedAPIType;
 import net.klnetwork.playerrolechecker.api.utils.Metrics;
 import net.klnetwork.playerrolechecker.api.utils.updater.UpdateAlert;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -27,10 +28,13 @@ public final class DiscordChat extends JavaPlugin implements APIHook {
     @Override
     public void onEnable() {
         if (connectHook()) {
-            getConfig().getConfigurationSection("settings").getKeys(false)
-                    .forEach(v -> {
+            ConfigurationSection section = getConfig().getConfigurationSection("log");
+            
+            section.getKeys(false).forEach(key -> {
+                ConfigurationSection values = section.getConfigurationSection(key);
 
-                    });
+
+            });
         }
         // Plugin startup logic
     }

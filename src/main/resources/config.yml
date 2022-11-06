@@ -1,8 +1,14 @@
 global-settings:
   console-log: true
 hook-plugin:
+  ## EssentialsX プラグインに対応するか
   hook-essentials-x: true
+  ## SuperVanish プラグインに対応するか
   hook-super-vanish: true
+  ## VanishNoPacket プラグインに対応するか
+  hook-vanish-no-packet: true
+  ## 複数のVanishに対応している可能性がある
+  legacy-vanish: true
 
 log:
   default-log:
