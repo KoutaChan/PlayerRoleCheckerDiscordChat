@@ -1,4 +1,4 @@
-package net.klnetwork.addons.discordchat.hook.essentialsX;
+package net.klnetwork.addons.discordchat.hook.plugins;
 
 import de.myzelyam.api.vanish.PlayerVanishStateChangeEvent;
 import org.bukkit.event.EventHandler;

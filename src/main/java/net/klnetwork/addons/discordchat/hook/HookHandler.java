@@ -1,8 +1,9 @@
 package net.klnetwork.addons.discordchat.hook;
 
-import net.klnetwork.addons.discordchat.hook.essentialsX.EssentialsXListener;
-import net.klnetwork.addons.discordchat.hook.essentialsX.SuperVanishListener;
-import net.klnetwork.addons.discordchat.hook.essentialsX.VanishNoPacketListener;
+import net.klnetwork.addons.discordchat.hook.legacy.VanishLegacy;
+import net.klnetwork.addons.discordchat.hook.plugins.EssentialsXListener;
+import net.klnetwork.addons.discordchat.hook.plugins.SuperVanishListener;
+import net.klnetwork.addons.discordchat.hook.plugins.VanishNoPacketListener;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -20,6 +21,10 @@ public class HookHandler {
 
         if (Bukkit.getPluginManager().isPluginEnabled("VanishNoPacket") && config.getBoolean("hook-plugin.hook-vanish-no-packet")) {
             Bukkit.getPluginManager().registerEvents(new VanishNoPacketListener(), plugin);
+        }
+
+        if (config.getBoolean("legacy-vanish")) {
+            Bukkit.getPluginManager().registerEvents(new VanishLegacy(), plugin);
         }
 
     }

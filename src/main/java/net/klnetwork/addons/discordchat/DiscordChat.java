@@ -1,6 +1,7 @@
 package net.klnetwork.addons.discordchat;
 
 import net.klnetwork.addons.discordchat.event.ConsoleWatcher;
+import net.klnetwork.addons.discordchat.log.LogManager;
 import net.klnetwork.playerrolechecker.api.PlayerRoleCheckerAPI;
 import net.klnetwork.playerrolechecker.api.data.APIHook;
 import net.klnetwork.playerrolechecker.api.data.JoinManager;
@@ -29,11 +30,9 @@ public final class DiscordChat extends JavaPlugin implements APIHook {
     public void onEnable() {
         if (connectHook()) {
             ConfigurationSection section = getConfig().getConfigurationSection("log");
-            
+
             section.getKeys(false).forEach(key -> {
                 ConfigurationSection values = section.getConfigurationSection(key);
-
-
             });
         }
         // Plugin startup logic
@@ -54,8 +53,8 @@ public final class DiscordChat extends JavaPlugin implements APIHook {
         final boolean connected = hook != null;
 
         if (connected) {
-            //Todo: Add Message!
             connectedHook = hook;
+            LogManager.logYaml("success-hook");
         }
         return connected;
     }

@@ -11,3 +11,6 @@
 - [x] SuperVanish
 - [x] EssentialsX
 - [x] VanishNoPacket
+
+## ライセンス
+#### なし (依存関係のライセンスを遵守してください)

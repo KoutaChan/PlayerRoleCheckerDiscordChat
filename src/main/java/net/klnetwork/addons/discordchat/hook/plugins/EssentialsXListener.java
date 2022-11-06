@@ -1,4 +1,4 @@
-package net.klnetwork.addons.discordchat.hook.essentialsX;
+package net.klnetwork.addons.discordchat.hook.plugins;
 
 import net.ess3.api.events.VanishStatusChangeEvent;
 import org.bukkit.event.EventHandler;

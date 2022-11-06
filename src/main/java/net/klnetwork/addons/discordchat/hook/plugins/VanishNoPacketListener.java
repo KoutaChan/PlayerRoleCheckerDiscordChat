@@ -1,4 +1,4 @@
-package net.klnetwork.addons.discordchat.hook.essentialsX;
+package net.klnetwork.addons.discordchat.hook.plugins;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
