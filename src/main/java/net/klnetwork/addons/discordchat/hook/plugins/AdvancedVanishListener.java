@@ -8,7 +8,7 @@ import org.bukkit.event.Listener;
 public class AdvancedVanishListener implements Listener {
     @EventHandler
     public void onPlayerVanishEvent(PlayerVanishEvent event) {
-        
+
     }
 
     @EventHandler

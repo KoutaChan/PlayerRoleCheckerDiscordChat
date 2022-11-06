@@ -1,5 +1,8 @@
 global-settings:
+  ## [Feature] コンソールのログを取得するか
   console-log: true
+  ## [Performance] プレイヤーロールチェッカーのプレイヤーデータをキャッシュするか
+  cache-playerdata: true
 hook-plugin:
   ## EssentialsX プラグインに対応するか
   hook-essentials-x: true

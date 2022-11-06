@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.Logger;
 import org.apache.logging.log4j.core.appender.AbstractAppender;
+import org.apache.logging.log4j.core.filter.AbstractFilter;
 import org.apache.logging.log4j.core.layout.PatternLayout;
 
 public class ConsoleWatcher extends AbstractAppender {
@@ -11,7 +12,7 @@ public class ConsoleWatcher extends AbstractAppender {
 
     protected ConsoleWatcher() {
         super("[PRCAddons] -> ConsoleWatcher"
-                , null
+                , new AbstractFilter() {}
                 , PatternLayout.newBuilder()
                         .withPattern("[%d{HH:mm:ss} %level]: %msg")
                         .build()
@@ -30,11 +31,9 @@ public class ConsoleWatcher extends AbstractAppender {
     }
 
     public static void onStop() {
-        if (currentWatcher == null) {
-            return;
+        if (currentWatcher != null) {
+            getLogger().removeAppender(currentWatcher);
         }
-        currentWatcher.stop();
-        getLogger().removeAppender(currentWatcher);
     }
 
     public static Logger getLogger() {

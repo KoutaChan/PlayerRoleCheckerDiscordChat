@@ -1,9 +1,10 @@
 package net.klnetwork.addons.discordchat;
 
+import net.klnetwork.addons.discordchat.api.ExtendedAPI;
+import net.klnetwork.addons.discordchat.data.playerdata.PlayerDataManager;
 import net.klnetwork.addons.discordchat.event.ConsoleWatcher;
 import net.klnetwork.addons.discordchat.log.LogManager;
 import net.klnetwork.playerrolechecker.api.PlayerRoleCheckerAPI;
-import net.klnetwork.playerrolechecker.api.data.APIHook;
 import net.klnetwork.playerrolechecker.api.data.JoinManager;
 import net.klnetwork.playerrolechecker.api.data.connector.ConnectorAPIHook;
 import net.klnetwork.playerrolechecker.api.enums.HookedAPIType;
@@ -13,9 +14,11 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class DiscordChat extends JavaPlugin implements APIHook {
+public final class DiscordChat extends JavaPlugin implements ExtendedAPI {
     private static DiscordChat INSTANCE;
     private static ConnectorAPIHook connectedHook;
+
+    private final Metrics metrics = new Metrics(this, 16812);
 
     @Override
     public void onLoad() {
@@ -63,7 +66,6 @@ public final class DiscordChat extends JavaPlugin implements APIHook {
         if (connectedHook == null) {
             connectHook();
         }
-
         return connectedHook;
     }
 
@@ -72,9 +74,9 @@ public final class DiscordChat extends JavaPlugin implements APIHook {
         return this;
     }
 
-    @Override //Todo Add Metrics
+    @Override
     public Metrics getMetrics() {
-        return null;
+        return metrics;
     }
 
     @Override
@@ -92,6 +94,7 @@ public final class DiscordChat extends JavaPlugin implements APIHook {
         return HookedAPIType.CUSTOM;
     }
 
+    @Override
     public boolean isConnected() {
         return connectedHook != null;
     }
