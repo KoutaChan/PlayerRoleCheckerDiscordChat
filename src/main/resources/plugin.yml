@@ -1,4 +1,9 @@
 name: DiscordChat
 version: '${project.version}'
 main: net.klnetwork.addons.discordchat.DiscordChat
+softdepend:
+  - 'Essentials'
+  - 'SuperVanish'
+  - 'PremiumVanish'
+  - 'VanishNoPacket'
 api-version: 1.19

@@ -65,6 +65,10 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+        <repository>
+            <id>essentials-releases</id>
+            <url>https://repo.essentialsx.net/releases/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -78,6 +82,7 @@
             <groupId>com.github.SIGMA-L.PlayerRoleChecker</groupId>
             <artifactId>PlayerRoleCheckerAPI</artifactId>
             <version>v4.21</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.dv8tion</groupId>
@@ -91,11 +96,39 @@
             </exclusions>
             <scope>provided</scope>
         </dependency>
+        <!-- Log4j はspigotに存在しているので提供で可 -->
         <dependency>
-            <!-- Log4j はspigotに存在しているので提供で可 -->
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
             <version>2.19.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Vanish Hook -->
+        <dependency>
+            <groupId>net.essentialsx</groupId>
+            <artifactId>EssentialsX</artifactId>
+            <version>2.19.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- EssentialsX Hook -->
+        <dependency>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-bukkit</artifactId>
+            <version>2.2.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Vanish Hook -->
+        <dependency>
+            <groupId>com.github.LeonMangler</groupId>
+            <artifactId>SuperVanish</artifactId>
+            <version>6.2.12</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- Vanish Hook -->
+        <dependency>
+            <groupId>com.github.mbax</groupId>
+            <artifactId>VanishNoPacket</artifactId>
+            <version>3.22</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

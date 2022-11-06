@@ -1,5 +1,8 @@
 global-settings:
   console-log: true
+hook-plugin:
+  hook-essentials-x: true
+  hook-super-vanish: true
 
 log:
   default-log:
@@ -12,11 +15,8 @@ log:
     channelId: 'CHANNEL_ID_HERE'
   operator-log:
     advanced-settings:
-      command-log: true
+      ## ONにするもの以外省略可能
       console-log: true
-      join-log: true
-      left-log: true
-      chat-log: true
     channelId: 'CHANNEL_ID_HERE'
 messages:
   success-hook: 'プレイヤーロールコネクターの接続に成功しました！'

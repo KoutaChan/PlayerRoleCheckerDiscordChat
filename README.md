@@ -6,3 +6,8 @@
 ### コンフィグの設定
 
 全ての機能を実装したら!
+
+## 互換性のあるプラグイン
+- [x] SuperVanish
+- [x] EssentialsX
+- [x] VanishNoPacket
