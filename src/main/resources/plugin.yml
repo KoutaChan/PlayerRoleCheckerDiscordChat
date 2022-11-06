@@ -2,8 +2,9 @@ name: DiscordChat
 version: '${project.version}'
 main: net.klnetwork.addons.discordchat.DiscordChat
 softdepend:
+  - 'PlayerRoleCheckerConnector'
   - 'Essentials'
   - 'SuperVanish'
   - 'PremiumVanish'
   - 'VanishNoPacket'
-api-version: 1.19
+api-version: 1.13

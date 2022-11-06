@@ -29,3 +29,7 @@ log:
     channelId: 'CHANNEL_ID_HERE'
 messages:
   success-hook: 'プレイヤーロールコネクターの接続に成功しました！'
+  cannot-find-hook: 'プレイヤーロールコネクターに接続に失敗しました・・・！'
+  success-register: '%name% の登録に成功しました'
+  text-channel-id-zero: 'テキストチャンネルのIDがゼロです！'
+  console-log: '[%date% %level%]: %msg%'

@@ -1,18 +1,23 @@
 package net.klnetwork.addons.discordchat;
 
 import net.klnetwork.addons.discordchat.api.ExtendedAPI;
-import net.klnetwork.addons.discordchat.data.playerdata.PlayerDataManager;
+import net.klnetwork.addons.discordchat.data.discord.DiscordData;
+import net.klnetwork.addons.discordchat.data.discord.DiscordManager;
 import net.klnetwork.addons.discordchat.event.ConsoleWatcher;
-import net.klnetwork.addons.discordchat.log.LogManager;
+import net.klnetwork.addons.discordchat.util.LogManager;
+import net.klnetwork.addons.discordchat.util.ReplaceText;
 import net.klnetwork.playerrolechecker.api.PlayerRoleCheckerAPI;
 import net.klnetwork.playerrolechecker.api.data.JoinManager;
 import net.klnetwork.playerrolechecker.api.data.connector.ConnectorAPIHook;
 import net.klnetwork.playerrolechecker.api.enums.HookedAPIType;
 import net.klnetwork.playerrolechecker.api.utils.Metrics;
 import net.klnetwork.playerrolechecker.api.utils.updater.UpdateAlert;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.logging.Level;
 
 public final class DiscordChat extends JavaPlugin implements ExtendedAPI {
     private static DiscordChat INSTANCE;
@@ -23,28 +28,43 @@ public final class DiscordChat extends JavaPlugin implements ExtendedAPI {
     @Override
     public void onLoad() {
         INSTANCE = this;
-
-        if (getConfig().getBoolean("global-settings.console-log")) {
-            ConsoleWatcher.onStart();
-        }
+        saveDefaultConfig();
     }
 
     @Override
     public void onEnable() {
+        // Plugin startup logic
         if (connectHook()) {
             ConfigurationSection section = getConfig().getConfigurationSection("log");
 
             section.getKeys(false).forEach(key -> {
                 ConfigurationSection values = section.getConfigurationSection(key);
+
+                DiscordManager.add(new DiscordData(
+                        values.getLong("channelId"),
+                        values.getBoolean("advanced-settings.console-log"),
+                        values.getBoolean("advanced-settings.command-log"),
+                        values.getBoolean("advanced-settings.join-log"),
+                        values.getBoolean("advanced-settings.left-log"),
+                        values.getBoolean("advanced-settings.chat-log")
+                ));
+                LogManager.logYaml(Level.INFO, "success-register", new ReplaceText("%name%", key));
             });
+
+            if (getConfig().getBoolean("global-settings.console-log")) {
+                ConsoleWatcher.onStart();
+            }
+
+            Runtime.getRuntime().addShutdownHook(new Thread(ConsoleWatcher::onStop));
+        } else {
+            LogManager.logYaml(Level.SEVERE, "cannot-find-hook");
+            Bukkit.getPluginManager().disablePlugin(this);
         }
-        // Plugin startup logic
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
-        ConsoleWatcher.onStop();
+        /* */
     }
 
     public static DiscordChat getInstance() {
