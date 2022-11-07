@@ -1,4 +1,4 @@
-package net.klnetwork.addons.discordchat.event;
+package net.klnetwork.addons.discordchat.event.log;
 
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.klnetwork.addons.discordchat.data.discord.DiscordData;
@@ -51,7 +51,7 @@ public class ConsoleWatcher extends AbstractAppender {
                     }))
                     .start();
         } catch (Exception ex) {
-            log("エラーがコンソールメッセージ受信で発生しました！ 停止します");
+            log("エラーがコンソールメッセージ受信で発生しました！");
             onStop();
         }
     }

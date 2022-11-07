@@ -5,16 +5,18 @@ import net.klnetwork.addons.discordchat.DiscordChat;
 
 public class DiscordData {
     private long textChannelId;
-    private final boolean consoleLog, commandLog, joinLog, leftLog, chatLog;
+    private final boolean consoleLog, consoleCommand, commandLog, joinLog, leftLog, chatLog, chat;
     private TextChannel channel;
 
-    public DiscordData(final long textChannelId, boolean consoleLog, boolean commandLog, boolean joinLog, boolean leftLog, boolean chatLog) {
+    public DiscordData(final long textChannelId, boolean consoleLog, boolean consoleCommand, boolean commandLog, boolean joinLog, boolean leftLog, boolean chatLog, boolean chat) {
         this.textChannelId = textChannelId;
         this.consoleLog = consoleLog;
+        this.consoleCommand = consoleCommand;
         this.commandLog = commandLog;
         this.joinLog = joinLog;
         this.leftLog = leftLog;
         this.chatLog = chatLog;
+        this.chat = chat;
     }
 
     public long getTextChannelId() {
@@ -36,6 +38,10 @@ public class DiscordData {
         return consoleLog;
     }
 
+    public boolean isConsoleCommand() {
+        return consoleCommand;
+    }
+
     public boolean isCommandLog() {
         return commandLog;
     }
@@ -50,6 +56,10 @@ public class DiscordData {
 
     public boolean isChatLog() {
         return chatLog;
+    }
+
+    public boolean isChat() {
+        return chat;
     }
 
     @Override

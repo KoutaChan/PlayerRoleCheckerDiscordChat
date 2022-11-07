@@ -3,7 +3,8 @@ package net.klnetwork.addons.discordchat;
 import net.klnetwork.addons.discordchat.api.ExtendedAPI;
 import net.klnetwork.addons.discordchat.data.discord.DiscordData;
 import net.klnetwork.addons.discordchat.data.discord.DiscordManager;
-import net.klnetwork.addons.discordchat.event.ConsoleWatcher;
+import net.klnetwork.addons.discordchat.event.DiscordEvent;
+import net.klnetwork.addons.discordchat.event.log.ConsoleWatcher;
 import net.klnetwork.addons.discordchat.util.LogManager;
 import net.klnetwork.addons.discordchat.util.ReplaceText;
 import net.klnetwork.playerrolechecker.api.PlayerRoleCheckerAPI;
@@ -43,10 +44,12 @@ public final class DiscordChat extends JavaPlugin implements ExtendedAPI {
                 DiscordManager.add(new DiscordData(
                         values.getLong("channelId"),
                         values.getBoolean("advanced-settings.console-log"),
+                        values.getBoolean("advanced-settings.console-command"),
                         values.getBoolean("advanced-settings.command-log"),
                         values.getBoolean("advanced-settings.join-log"),
                         values.getBoolean("advanced-settings.left-log"),
-                        values.getBoolean("advanced-settings.chat-log")
+                        values.getBoolean("advanced-settings.chat-log"),
+                        values.getBoolean("chat")
                 ));
                 LogManager.logYaml(Level.INFO, "success-register", new ReplaceText("%name%", key));
             });
@@ -54,8 +57,7 @@ public final class DiscordChat extends JavaPlugin implements ExtendedAPI {
             if (getConfig().getBoolean("global-settings.console-log")) {
                 ConsoleWatcher.onStart();
             }
-
-            Runtime.getRuntime().addShutdownHook(new Thread(ConsoleWatcher::onStop));
+            connectedHook.getJDA().addEventListener(new DiscordEvent());
         } else {
             LogManager.logYaml(Level.SEVERE, "cannot-find-hook");
             Bukkit.getPluginManager().disablePlugin(this);
@@ -64,6 +66,7 @@ public final class DiscordChat extends JavaPlugin implements ExtendedAPI {
 
     @Override
     public void onDisable() {
+        ConsoleWatcher.onStop();
         /* */
     }
 

@@ -9,7 +9,7 @@ public class ConfigManager {
         String text = DiscordChat.getInstance().getConfig().getString(MESSAGE_PREFIX + yaml);
 
         if (text == null) {
-            return "N/A (Please create issues!)";
+            return "N/A" + MESSAGE_PREFIX + yaml + "!";
         }
 
         for (ReplaceText replaceText : texts) {

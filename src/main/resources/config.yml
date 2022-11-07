@@ -1,8 +1,13 @@
+## [Addon] DiscordChatのコンフィグです
+## プレイヤーロールチェッカーのv4.21での動作確認をしています
+## 欲しい機能などがあったらGitHubまたはKouta1212#0001にフレンドを送ってください
 global-settings:
   ## [Feature] コンソールのログを取得するか
   console-log: true
   ## [Performance] プレイヤーロールチェッカーのプレイヤーデータをキャッシュするか
   cache-playerdata: true
+  ## [Performance] ディスコードにチャットをしたときにプレイヤーデータを取得するか
+  get-playerdata: false
 hook-plugin:
   ## EssentialsX プラグインに対応するか
   hook-essentials-x: true
@@ -12,24 +17,45 @@ hook-plugin:
   hook-vanish-no-packet: true
   ## 複数のVanishに対応している可能性がある
   legacy-vanish: true
-
 log:
   default-log:
     advanced-settings:
+      ## コマンドログのログをテキストチャンネルに送信します
       command-log: false
+      ## コンソールのログをテキストチャンネルに送信します
       console-log: false
+      ## コンソールとしてコマンドを実行します
+      console-command: false
+      ## 参加しsたときのログをテキストチャンネルに送信します
       join-log: true
+      ## 抜けたときのログをテキストチャンネルに送信します
       left-log: true
+      ## チャットのログをテキストチャンネルに送信します
       chat-log: true
+      ## ディスコードのメッセージをサーバーに送信します
+      chat: true
     channelId: 'CHANNEL_ID_HERE'
   operator-log:
     advanced-settings:
       ## ONにするもの以外省略可能
       console-log: true
+      console-command: true
     channelId: 'CHANNEL_ID_HERE'
 messages:
   success-hook: 'プレイヤーロールコネクターの接続に成功しました！'
   cannot-find-hook: 'プレイヤーロールコネクターに接続に失敗しました・・・！'
+  ## %name% - 登録成功した名前
   success-register: '%name% の登録に成功しました'
   text-channel-id-zero: 'テキストチャンネルのIDがゼロです！'
+  ## %date% - コンソールの日付
+  ## %level% - メッセージのレベル
+  ## %msg% - メッセージ
   console-log: '[%date% %level%]: %msg%'
+  ## %name% - ディスコードのプレイヤー名 [例: Kouta1212]
+  ## %display_name% - ディスコードのディスプレイ名 [例: こうた]
+  ## %full_name% - ディスコードのプレイヤー名 [例: Kouta1212#0001]
+  ## %top_level_role% - 現在のロールの最大値を取得します
+  chat-message: '%display_name% > %msg% [%full_name%]'
+  ## 登録されている場合のメッセージ
+  ## getPlayerDataを true にする場合に使うことが可能です
+  chat-message-registered: '[Verified] %name% > %msg% [%full_name%]'

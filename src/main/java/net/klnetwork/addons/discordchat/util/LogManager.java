@@ -6,8 +6,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class LogManager {
-
-
     public static void log(String log) {
         getLogger().info(log);
     }
