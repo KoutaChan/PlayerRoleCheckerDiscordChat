@@ -8,6 +8,11 @@ global-settings:
   cache-playerdata: true
   ## [Performance] ディスコードにチャットをしたときにプレイヤーデータを取得するか
   get-playerdata: false
+  ## SkinUrl
+  ## スキンを生成する方法
+  ##- LINK 誰かのHTTPに依存してDiscordを見たプレイヤーに処理してもらいます！
+  ##- LOCAL ローカルで生成します (HTTPリクエストが必要になります！)
+  currentSkinGenerate: 'LINK'
 hook-plugin:
   ## EssentialsX プラグインに対応するか
   hook-essentials-x: true
@@ -34,6 +39,8 @@ log:
       chat-log: true
       ## ディスコードのメッセージをサーバーに送信します
       chat: true
+      ## チャットがプラグインによってキャンセルされた場合に送信しないようにするか
+      ignore-cancel-chat: true
     channelId: 'CHANNEL_ID_HERE'
   operator-log:
     advanced-settings:
@@ -49,12 +56,16 @@ messages:
   text-channel-id-zero: 'テキストチャンネルのIDがゼロです！'
   ## %date% - コンソールの日付
   ## %level% - メッセージのレベル
+  ## %logger_name% - ロガーの名前 [例: [DiscordChat]]
   ## %msg% - メッセージ
-  console-log: '[%date% %level%]: %msg%'
+  console-log: '[%date% %level%]: %logger_name% %msg%'
   ## %name% - ディスコードのプレイヤー名 [例: Kouta1212]
   ## %display_name% - ディスコードのディスプレイ名 [例: こうた]
   ## %full_name% - ディスコードのプレイヤー名 [例: Kouta1212#0001]
-  ## %top_level_role% - 現在のロールの最大値を取得します
-  chat-message: '%display_name% > %msg% [%full_name%]'
+  ## %top_level_role% - 現在のロールの上位1件を取得します
+  ## %color% - ロールのカラーをマインクラフトで再現 (Require Minecraft 1.16+)
+  chat-message: '%display_name% > %msg% [%full_name% |%color% %top_level_role%&f]'
   ## 登録されている場合のメッセージ getPlayerData をtrueにする場合に使うことが可能です
-  chat-message-registered: '[Verified] %name% > %msg% [%full_name%]'
+  chat-message-registered: '[Verified]%display_name% > %msg% [%full_name% |%color% %top_level_role%&f]'
+  ## ロールがない場合に使われる
+  non-role: 'N/A'

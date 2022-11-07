@@ -4,6 +4,7 @@ import net.klnetwork.addons.discordchat.api.ExtendedAPI;
 import net.klnetwork.addons.discordchat.data.discord.DiscordData;
 import net.klnetwork.addons.discordchat.data.discord.DiscordManager;
 import net.klnetwork.addons.discordchat.event.DiscordEvent;
+import net.klnetwork.addons.discordchat.event.EventListener;
 import net.klnetwork.addons.discordchat.event.log.ConsoleWatcher;
 import net.klnetwork.addons.discordchat.util.LogManager;
 import net.klnetwork.addons.discordchat.util.ReplaceText;
@@ -37,6 +38,7 @@ public final class DiscordChat extends JavaPlugin implements ExtendedAPI {
             if (getConfig().getBoolean("global-settings.console-log")) {
                 ConsoleWatcher.onStart();
             }
+            connectedHook.getJDA().addEventListener(new DiscordEvent());
 
             ConfigurationSection section = getConfig().getConfigurationSection("log");
 
@@ -55,8 +57,7 @@ public final class DiscordChat extends JavaPlugin implements ExtendedAPI {
                 ));
                 LogManager.logYaml("success-register", new ReplaceText("%name%", key));
             });
-
-            connectedHook.getJDA().addEventListener(new DiscordEvent());
+            Bukkit.getPluginManager().registerEvents(new EventListener(), this);
         } else {
             LogManager.logYaml("cannot-find-hook");
             Bukkit.getPluginManager().disablePlugin(this);

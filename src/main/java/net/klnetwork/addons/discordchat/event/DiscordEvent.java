@@ -1,10 +1,12 @@
 package net.klnetwork.addons.discordchat.event;
 
 import net.dv8tion.jda.api.entities.ChannelType;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.klnetwork.addons.discordchat.DiscordChat;
 import net.klnetwork.addons.discordchat.data.discord.DiscordManager;
+import net.klnetwork.addons.discordchat.util.ColorUtils;
 import net.klnetwork.addons.discordchat.util.ConfigManager;
 import net.klnetwork.addons.discordchat.util.ReplaceText;
 import net.klnetwork.playerrolechecker.api.data.common.PlayerData;
@@ -31,7 +33,15 @@ public class DiscordEvent extends ListenerAdapter {
                                 add(new ReplaceText("%name%", event.getAuthor().getName()));
                                 add(new ReplaceText("%display_name%", event.getMember().getEffectiveName()));
                                 add(new ReplaceText("%full_name%", event.getMember().getUser().getAsTag()));
-                                add(new ReplaceText("%msg%", event.getMessage().getContentRaw()));
+                                add(new ReplaceText("%msg%", message));
+                                /* Role Info */
+                                    final Role top = event.getMember().getRoles().isEmpty() ? null : event.getMember().getRoles().get(0);
+                                    add(new ReplaceText("%top_level_role%", top != null
+                                            ? top.getName()
+                                            : ConfigManager.getYaml("non-role")));
+                                    add(new ReplaceText("%color%", top != null
+                                            ? ColorUtils.toHex(ColorUtils.colorToHex(top.getColorRaw()))
+                                            : ""));
                             }};
 
                             PlayerData playerData = DiscordChat.getInstance().getConfig().getBoolean("global-settings.get-playerdata") ?

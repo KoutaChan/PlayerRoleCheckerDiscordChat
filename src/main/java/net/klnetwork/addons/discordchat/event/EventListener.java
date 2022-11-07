@@ -1,8 +1,11 @@
 package net.klnetwork.addons.discordchat.event;
 
 import net.klnetwork.addons.discordchat.DiscordChat;
+import net.klnetwork.addons.discordchat.data.discord.DiscordData;
+import net.klnetwork.addons.discordchat.data.discord.DiscordManager;
 import net.klnetwork.addons.discordchat.data.playerdata.PlayerData;
 import net.klnetwork.addons.discordchat.data.playerdata.PlayerDataManager;
+import net.klnetwork.addons.discordchat.util.PlayerUtils;
 import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -28,6 +31,14 @@ public class EventListener implements Listener {
                         PlayerDataManager.put(event.getPlayer().getUniqueId(), new PlayerData(event.getPlayer(), playerData));
                     });
         }
+        DiscordManager.get().stream()
+                .filter(DiscordData::isJoinLog)
+                .forEachOrdered(v -> {
+
+                });
+
+        System.out.println("CALLED!");
+        System.out.println(PlayerUtils.getSkinUrl(event.getPlayer()).toURL());
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -35,5 +46,10 @@ public class EventListener implements Listener {
         if (DiscordChat.getInstance().getConfig().getBoolean("global-settings.cache-playerdata")) {
             PlayerDataManager.remove(event.getPlayer().getUniqueId());
         }
+        DiscordManager.get().stream()
+                .filter(DiscordData::isLeftLog)
+                .forEachOrdered(v -> {
+
+                });
     }
 }

@@ -13,9 +13,11 @@ public class ConfigManager {
             return "N/A" + MESSAGE_PREFIX + yaml + "!";
         }
 
+        text = ChatColor.translateAlternateColorCodes('&', text);
+
         for (ReplaceText replaceText : texts) {
             text = text.replace(replaceText.getRegex(), replaceText.getReplacement());
         }
-        return ChatColor.translateAlternateColorCodes('&', text);
+        return text;
     }
 }
