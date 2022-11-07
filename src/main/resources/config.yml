@@ -56,6 +56,5 @@ messages:
   ## %full_name% - ディスコードのプレイヤー名 [例: Kouta1212#0001]
   ## %top_level_role% - 現在のロールの最大値を取得します
   chat-message: '%display_name% > %msg% [%full_name%]'
-  ## 登録されている場合のメッセージ
-  ## getPlayerDataを true にする場合に使うことが可能です
+  ## 登録されている場合のメッセージ getPlayerData をtrueにする場合に使うことが可能です
   chat-message-registered: '[Verified] %name% > %msg% [%full_name%]'

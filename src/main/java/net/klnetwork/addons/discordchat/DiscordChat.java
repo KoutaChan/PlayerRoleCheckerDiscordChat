@@ -18,8 +18,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.logging.Level;
-
 public final class DiscordChat extends JavaPlugin implements ExtendedAPI {
     private static DiscordChat INSTANCE;
     private static ConnectorAPIHook connectedHook;
@@ -36,6 +34,10 @@ public final class DiscordChat extends JavaPlugin implements ExtendedAPI {
     public void onEnable() {
         // Plugin startup logic
         if (connectHook()) {
+            if (getConfig().getBoolean("global-settings.console-log")) {
+                ConsoleWatcher.onStart();
+            }
+
             ConfigurationSection section = getConfig().getConfigurationSection("log");
 
             section.getKeys(false).forEach(key -> {
@@ -49,17 +51,14 @@ public final class DiscordChat extends JavaPlugin implements ExtendedAPI {
                         values.getBoolean("advanced-settings.join-log"),
                         values.getBoolean("advanced-settings.left-log"),
                         values.getBoolean("advanced-settings.chat-log"),
-                        values.getBoolean("chat")
+                        values.getBoolean("advanced-settings.chat")
                 ));
-                LogManager.logYaml(Level.INFO, "success-register", new ReplaceText("%name%", key));
+                LogManager.logYaml("success-register", new ReplaceText("%name%", key));
             });
 
-            if (getConfig().getBoolean("global-settings.console-log")) {
-                ConsoleWatcher.onStart();
-            }
             connectedHook.getJDA().addEventListener(new DiscordEvent());
         } else {
-            LogManager.logYaml(Level.SEVERE, "cannot-find-hook");
+            LogManager.logYaml("cannot-find-hook");
             Bukkit.getPluginManager().disablePlugin(this);
         }
     }
