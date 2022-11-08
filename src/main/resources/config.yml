@@ -8,11 +8,20 @@ global-settings:
   cache-playerdata: true
   ## [Performance] ディスコードにチャットをしたときにプレイヤーデータを取得するか
   get-playerdata: false
-  ## SkinUrl
-  ## スキンを生成する方法
+  ## [Performance] スキンを生成する方法
   ##- LINK 誰かのHTTPに依存してDiscordを見たプレイヤーに処理してもらいます！
   ##- LOCAL ローカルで生成します (HTTPリクエストが必要になります！)
   currentSkinGenerate: 'LINK'
+  bedrock-editions-avator-link: ''
+  java-editions-avator-link: ''
+  ## ディスコードトークンを設定したい場合は設定可能です
+  ## ただし、通常はプレイヤーロールチェッカーから取得されているため設定は不要です
+  ## 通常は空白
+  discord-token: ''
+  ## プレイヤーロールチェッカーに接続しないかを設定できます
+  ## これを設定する場合は、cache-playerdata、get-playerdataなどをfalseにして
+  ## discord-tokenを設定してください！
+  dontConnectPlayerRoleChecker: false
 hook-plugin:
   ## EssentialsX プラグインに対応するか
   hook-essentials-x: true
@@ -31,7 +40,7 @@ log:
       console-log: false
       ## コンソールとしてコマンドを実行します
       console-command: false
-      ## 参加しsたときのログをテキストチャンネルに送信します
+      ## 参加したときのログをテキストチャンネルに送信します
       join-log: true
       ## 抜けたときのログをテキストチャンネルに送信します
       left-log: true
@@ -40,7 +49,7 @@ log:
       ## ディスコードのメッセージをサーバーに送信します
       chat: true
       ## チャットがプラグインによってキャンセルされた場合に送信しないようにするか
-      ignore-cancel-chat: true
+      ignore-canceled-chat: true
     channelId: 'CHANNEL_ID_HERE'
   operator-log:
     advanced-settings:
@@ -49,8 +58,8 @@ log:
       console-command: true
     channelId: 'CHANNEL_ID_HERE'
 messages:
-  success-hook: 'プレイヤーロールコネクターの接続に成功しました！'
-  cannot-find-hook: 'プレイヤーロールコネクターに接続に失敗しました・・・！'
+  success-hook: '&aプレイヤーロールコネクターの接続に成功しました！'
+  cannot-find-hook: '&cプレイヤーロールコネクターに接続に失敗しました・・・！'
   ## %name% - 登録成功した名前
   success-register: '%name% の登録に成功しました'
   text-channel-id-zero: 'テキストチャンネルのIDがゼロです！'
@@ -64,6 +73,7 @@ messages:
   ## %full_name% - ディスコードのプレイヤー名 [例: Kouta1212#0001]
   ## %top_level_role% - 現在のロールの上位1件を取得します
   ## %color% - ロールのカラーをマインクラフトで再現 (Require Minecraft 1.16+)
+  ## %msg% - メッセージ
   chat-message: '%display_name% > %msg% [%full_name% |%color% %top_level_role%&f]'
   ## 登録されている場合のメッセージ getPlayerData をtrueにする場合に使うことが可能です
   chat-message-registered: '[Verified]%display_name% > %msg% [%full_name% |%color% %top_level_role%&f]'

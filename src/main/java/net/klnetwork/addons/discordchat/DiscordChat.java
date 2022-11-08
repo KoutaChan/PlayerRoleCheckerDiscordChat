@@ -1,6 +1,8 @@
 package net.klnetwork.addons.discordchat;
 
+import net.dv8tion.jda.api.JDA;
 import net.klnetwork.addons.discordchat.api.ExtendedAPI;
+import net.klnetwork.addons.discordchat.data.JDAManager;
 import net.klnetwork.addons.discordchat.data.discord.DiscordData;
 import net.klnetwork.addons.discordchat.data.discord.DiscordManager;
 import net.klnetwork.addons.discordchat.event.DiscordEvent;
@@ -24,6 +26,7 @@ public final class DiscordChat extends JavaPlugin implements ExtendedAPI {
     private static ConnectorAPIHook connectedHook;
 
     private final Metrics metrics = new Metrics(this, 16812);
+    private final JDAManager jdaManager = new JDAManager(this);
 
     @Override
     public void onLoad() {
@@ -34,11 +37,11 @@ public final class DiscordChat extends JavaPlugin implements ExtendedAPI {
     @Override
     public void onEnable() {
         // Plugin startup logic
-        if (connectHook()) {
+        if (getConfig().getBoolean("global-settings.dontConnectPlayerRoleChecker") || connectHook()) {
             if (getConfig().getBoolean("global-settings.console-log")) {
                 ConsoleWatcher.onStart();
             }
-            connectedHook.getJDA().addEventListener(new DiscordEvent());
+            jdaManager.getJDA().addEventListener(new DiscordEvent());
 
             ConfigurationSection section = getConfig().getConfigurationSection("log");
 
@@ -57,6 +60,7 @@ public final class DiscordChat extends JavaPlugin implements ExtendedAPI {
                 ));
                 LogManager.logYaml("success-register", new ReplaceText("%name%", key));
             });
+
             Bukkit.getPluginManager().registerEvents(new EventListener(), this);
         } else {
             LogManager.logYaml("cannot-find-hook");
@@ -67,7 +71,10 @@ public final class DiscordChat extends JavaPlugin implements ExtendedAPI {
     @Override
     public void onDisable() {
         ConsoleWatcher.onStop();
-        /* */
+
+        if (jdaManager.isLocalJDA()) {
+            jdaManager.stop();
+        }
     }
 
     public static DiscordChat getInstance() {
@@ -115,6 +122,11 @@ public final class DiscordChat extends JavaPlugin implements ExtendedAPI {
     @Override
     public HookedAPIType getType() {
         return HookedAPIType.CUSTOM;
+    }
+
+    @Override
+    public JDA getJDA() {
+        return jdaManager.getJDA();
     }
 
     @Override

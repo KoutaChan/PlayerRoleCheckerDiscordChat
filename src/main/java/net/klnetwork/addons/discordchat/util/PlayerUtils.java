@@ -1,5 +1,7 @@
 package net.klnetwork.addons.discordchat.util;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Method;
@@ -78,8 +80,12 @@ public class PlayerUtils {
             return texture;
         }
 
+        public JsonObject getJson() {
+            return new Gson().fromJson(new String(Base64.getDecoder().decode(texture), StandardCharsets.UTF_8), JsonObject.class);
+        }
+
         public String toURL() {
-            return new String(Base64.getDecoder().decode(texture), StandardCharsets.UTF_8);
+            return getJson().get("textures").getAsJsonObject().get("SKIN").getAsJsonObject().get("url").getAsString();
         }
 
         public String getSignature() {

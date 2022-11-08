@@ -29,7 +29,7 @@ public class DiscordData {
 
     public TextChannel getTextChannel() {
         if (channel == null) {
-            channel = DiscordChat.getConnectedHook().getJDA().getTextChannelById(textChannelId);
+            channel = DiscordChat.getInstance().getJDA().getTextChannelById(textChannelId);
         }
         return channel;
     }
@@ -67,10 +67,13 @@ public class DiscordData {
         return "DiscordData{" +
                 "textChannelId=" + textChannelId +
                 ", consoleLog=" + consoleLog +
+                ", consoleCommand=" + consoleCommand +
                 ", commandLog=" + commandLog +
                 ", joinLog=" + joinLog +
                 ", leftLog=" + leftLog +
                 ", chatLog=" + chatLog +
+                ", chat=" + chat +
+                ", channel=" + channel +
                 '}';
     }
 }
