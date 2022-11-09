@@ -16,16 +16,27 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 
 public class EventListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onAsyncPlayerChatEvent(AsyncPlayerChatEvent event) {
+        Pair<Object, Boolean> message = ConfigManager.getDiscordYaml("minecraft-chat-message",
+                new ReplaceText("%avatar%", DiscordChat.getInstance().getGenerateType() == GenerateType.LINK
+                        ? CommonUtils.isFloodgateUser(event.getPlayer().getUniqueId())
+                        ? ConfigManager.getYamlGlobal("global-settings.bedrock-editions-avatar-link")
+                        : ConfigManager.getYamlGlobal("global-settings.java-editions-avatar-link")
+                        : "attachment://avatar.png"),
+                new ReplaceText("%name%", event.getPlayer().getName()),
+                new ReplaceText("%uuid%", event.getPlayer().getUniqueId().toString()),
+                new ReplaceText("%msg%", event.getMessage()));
+
         DiscordManager.get().stream()
-                .filter(data -> data.isChat() && (!event.isCancelled()));
+                .filter(data -> data.isChat() && !(event.isCancelled() && data.isIgnoreCancelledChat()))
+                .forEachOrdered(data -> {
+                    DiscordUtils.sendMessage(data.getTextChannel(), message.getLeft(),
+                            message.getRight() ? PlayerUtils.getHeadSkin(event.getPlayer()) : null);
+                });
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

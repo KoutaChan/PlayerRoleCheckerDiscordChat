@@ -35,7 +35,6 @@ public class DiscordEvent extends ListenerAdapter {
                                 add(new ReplaceText("%name%", event.getAuthor().getName()));
                                 add(new ReplaceText("%display_name%", event.getMember().getEffectiveName()));
                                 add(new ReplaceText("%full_name%", event.getMember().getUser().getAsTag()));
-                                add(new ReplaceText("%msg%", message));
                                 final Role top = event.getMember().getRoles().isEmpty() ? null : event.getMember().getRoles().get(0);
                                 add(new ReplaceText("%top_level_role%", top != null
                                         ? top.getName()
@@ -43,15 +42,16 @@ public class DiscordEvent extends ListenerAdapter {
                                 add(new ReplaceText("%color%", top != null
                                         ? ColorUtils.toHex(ColorUtils.colorToHex(top.getColorRaw()))
                                         : ""));
+                                add(new ReplaceText("%msg%", message));
                             }};
 
                             PlayerData playerData = DiscordChat.getInstance().getConfig().getBoolean("global-settings.get-playerdata") ?
                                     DiscordChat.getConnectedHook().getPlayerData().getUUID(event.getMember().getId()) : null;
 
                             if (playerData == null) {
-                                Bukkit.broadcastMessage(ConfigManager.getYaml("chat-message", texts.toArray(new ReplaceText[0])));
+                                Bukkit.broadcastMessage(ConfigManager.getYaml("discord-chat-message", texts.toArray(new ReplaceText[0])));
                             } else {
-                                Bukkit.broadcastMessage(ConfigManager.getYaml("chat-message-registered", texts.toArray(new ReplaceText[0])));
+                                Bukkit.broadcastMessage(ConfigManager.getYaml("discord-chat-message-registered", texts.toArray(new ReplaceText[0])));
                             }
                         }
                     })).start();

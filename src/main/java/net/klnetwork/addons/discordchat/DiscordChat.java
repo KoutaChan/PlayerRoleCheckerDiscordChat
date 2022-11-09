@@ -61,7 +61,8 @@ public final class DiscordChat extends JavaPlugin implements ExtendedAPI {
                         values.getBoolean("advanced-settings.join-log"),
                         values.getBoolean("advanced-settings.left-log"),
                         values.getBoolean("advanced-settings.chat-log"),
-                        values.getBoolean("advanced-settings.chat")
+                        values.getBoolean("advanced-settings.chat"),
+                        values.getBoolean("advanced-settings.ignore-canceled-chat")
                 ));
                 LogManager.logYaml("success-register", new ReplaceText("%name%", key));
             });

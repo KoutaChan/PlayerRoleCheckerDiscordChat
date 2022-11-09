@@ -6,10 +6,10 @@ import net.klnetwork.addons.discordchat.util.LogManager;
 
 public class DiscordData {
     private long textChannelId;
-    private final boolean consoleLog, consoleCommand, commandLog, joinLog, leftLog, chatLog, chat;
+    private final boolean consoleLog, consoleCommand, commandLog, joinLog, leftLog, chatLog, chat, ignoreCancelledChat;
     private TextChannel channel;
 
-    public DiscordData(final long textChannelId, boolean consoleLog, boolean consoleCommand, boolean commandLog, boolean joinLog, boolean leftLog, boolean chatLog, boolean chat) {
+    public DiscordData(final long textChannelId, boolean consoleLog, boolean consoleCommand, boolean commandLog, boolean joinLog, boolean leftLog, boolean chatLog, boolean chat, boolean ignoreCancelledChat) {
         if (textChannelId == 0) {
             LogManager.logYaml("text-channel-id-zero");
             throw new IllegalStateException("Received Zero");
@@ -22,6 +22,7 @@ public class DiscordData {
         this.leftLog = leftLog;
         this.chatLog = chatLog;
         this.chat = chat;
+        this.ignoreCancelledChat = ignoreCancelledChat;
     }
 
     public long getTextChannelId() {
@@ -67,6 +68,10 @@ public class DiscordData {
         return chat;
     }
 
+    public boolean isIgnoreCancelledChat() {
+        return ignoreCancelledChat;
+    }
+
     @Override
     public String toString() {
         return "DiscordData{" +
@@ -78,6 +83,7 @@ public class DiscordData {
                 ", leftLog=" + leftLog +
                 ", chatLog=" + chatLog +
                 ", chat=" + chat +
+                ", ignoreCancelledChat=" + ignoreCancelledChat +
                 ", channel=" + channel +
                 '}';
     }

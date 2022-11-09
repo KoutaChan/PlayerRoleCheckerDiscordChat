@@ -49,7 +49,7 @@ public class ConfigManager {
                 setImage(getString(section, "image", texts));
                 setTimestamp(section.getBoolean("timestamp") ? OffsetDateTime.now() : null);
                 setAuthor(getString(section, "author.name", texts), getString(section, "author.url", texts), getString(section, "author.iconUrl", texts));
-                setFooter(getString(section, "footer", texts));
+                setFooter(getString(section, "footer.name", texts), getString(section, "footer.iconUrl", texts));
 
                 for (String message : section.getStringList("message")) {
                     String[] strings = message.split("\\|", 3);
@@ -66,10 +66,14 @@ public class ConfigManager {
 
     public static String getString(ConfigurationSection section, String yamlKey, ReplaceText... text) {
         if (section.isString(yamlKey)) {
-            return toText(section.getString(yamlKey), text);
+            return isEmpty(toText(section.getString(yamlKey), text));
         } else if (section.isList(yamlKey)) {
-            return toText(String.join("\n", section.getStringList(yamlKey)), text);
+            return isEmpty(toText(String.join("\n", section.getStringList(yamlKey)), text));
         }
         return null;
+    }
+
+    public static String isEmpty(String string) {
+        return string.isEmpty() ? null : string;
     }
 }

@@ -76,34 +76,57 @@ messages:
   ## %top_level_role% - 現在のロールの上位1件を取得します
   ## %color% - ロールのカラーをマインクラフトで再現 (Require Minecraft 1.16+)
   ## %msg% - メッセージ
-  chat-message: '%display_name% > %msg% [%full_name% |%color% %top_level_role%&f]'
+  discord-chat-message: '%display_name% > %msg% [%full_name% |%color% %top_level_role%&f]'
   ## [Minecraft] プレイヤーロールチェッカーに登録されている場合のメッセージ
   ## global-settingsのgetPlayerDataをtrueにする場合に使用可能です
-  chat-message-registered: '[Verified] %display_name% > %msg% [%full_name% |%color% %top_level_role%&f]'
+  discord-chat-message-registered: '[Verified] %display_name% > %msg% [%full_name% |%color% %top_level_role%&f]'
   ## [Minecraft] - ディスコードのロールがない場合に使われます
   non-role: 'N/A'
   ## [Discord] - マインクラフトのチャットをディスコードに送信します
   ## %name% - マインクラフトのプレイヤー名
-  ## %msg% - コマンド内容
+  ## %uuid% - マインクラフトのプレイヤーのUUID
   ## %avatar% - アバターのイメージ
+  ## %msg% - コマンド内容
   command-message: '[Command] %name% > %msg%'
   ## [Discord] - マインクラフトの参加をディスコードに送信します
+  ## %name% - マインクラフトのプレイヤー名
+  ## %uuid% - マインクラフトのプレイヤーのUUID
+  ## %avatar% - アバターのイメージ
   join-message:
     ## スキンを生成する方法がローカルになっている場合、スキンを生成するか
     generate: true
     title:
+    color: 'GREEN'
+    description:
+    image:
     author:
       name: '%name% がサーバーに参加しました！'
       url:
       iconUrl: '%avatar%'
-    color: 'GREEN'
+    footer:
+      name:
+      iconUrl:
   ## [Discord] - マインクラフトの退出をディスコードに送信します
+  ## %name% - マインクラフトのプレイヤー名
+  ## %uuid% - マインクラフトのプレイヤーのUUID
+  ## %avatar% - アバターのイメージ
   left-message:
     ## スキンを生成する方法がローカルになっている場合、スキンを生成するか
     generate: true
     title:
+    color: 'RED'
+    description:
+    image:
     author:
       name: '%name% がサーバーから退出しました！'
-      url: ''
-      iconUrl: '%avatar'
-    color: 'RED'
+      url:
+      iconUrl: '%avatar%'
+    footer:
+      name:
+      iconUrl:
+  ## [Discord] - マインクラフトの退出をディスコードに送信します
+  ## %name% - マインクラフトのプレイヤー名
+  ## %uuid% - マインクラフトのプレイヤーのUUID
+  ## %avatar% - アバターのイメージ
+  ## %msg% - メッセージ内容
+  minecraft-chat-message: '%name% > %msg%'
