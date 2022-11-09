@@ -91,11 +91,19 @@ messages:
   join-message:
     ## スキンを生成する方法がローカルになっている場合、スキンを生成するか
     generate: true
-    title: '%avatar% %name% がサーバーに参加しました！'
+    title:
+    author:
+      name: '%name% がサーバーに参加しました！'
+      url:
+      iconUrl: '%avatar%'
     color: 'GREEN'
   ## [Discord] - マインクラフトの退出をディスコードに送信します
   left-message:
     ## スキンを生成する方法がローカルになっている場合、スキンを生成するか
     generate: true
-    title: '%avatar% %name% がサーバーから退出しました！'
+    title:
+    author:
+      name: '%name% がサーバーから退出しました！'
+      url: ''
+      iconUrl: '%avatar'
     color: 'RED'

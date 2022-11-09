@@ -48,7 +48,7 @@ public class ConfigManager {
                 setThumbnail(getString(section, "description", texts));
                 setImage(getString(section, "image", texts));
                 setTimestamp(section.getBoolean("timestamp") ? OffsetDateTime.now() : null);
-                setAuthor(getString(section, "author", texts));
+                setAuthor(getString(section, "author.name", texts), getString(section, "author.url", texts), getString(section, "author.iconUrl", texts));
                 setFooter(getString(section, "footer", texts));
 
                 for (String message : section.getStringList("message")) {
