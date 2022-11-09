@@ -1,7 +1,9 @@
 package net.klnetwork.addons.discordchat;
 
+import com.sun.management.OperatingSystemMXBean;
 import net.dv8tion.jda.api.JDA;
 import net.klnetwork.addons.discordchat.api.ExtendedAPI;
+import net.klnetwork.addons.discordchat.api.GenerateType;
 import net.klnetwork.addons.discordchat.data.JDAManager;
 import net.klnetwork.addons.discordchat.data.discord.DiscordData;
 import net.klnetwork.addons.discordchat.data.discord.DiscordManager;
@@ -21,12 +23,15 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.lang.management.ManagementFactory;
+
 public final class DiscordChat extends JavaPlugin implements ExtendedAPI {
     private static DiscordChat INSTANCE;
     private static ConnectorAPIHook connectedHook;
 
     private final Metrics metrics = new Metrics(this, 16812);
     private final JDAManager jdaManager = new JDAManager(this);
+    private final GenerateType generateType = GenerateType.valueOf(getConfig().getString("global-settings.currentSkinGenerate").toUpperCase());
 
     @Override
     public void onLoad() {
@@ -66,6 +71,16 @@ public final class DiscordChat extends JavaPlugin implements ExtendedAPI {
             LogManager.logYaml("cannot-find-hook");
             Bukkit.getPluginManager().disablePlugin(this);
         }
+        Bukkit.getScheduler().runTaskTimerAsynchronously(DiscordChat.getInstance(), () -> {
+            OperatingSystemMXBean osMBean = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
+            //oMethod(osMBean);
+        }, 0, 40);
+    }
+
+    public void oMethod(OperatingSystemMXBean osMBean) {
+
+
+        System.out.println("Cpu usage: "+ (osMBean.getSystemCpuLoad() * 100)+"%");
     }
 
     @Override
@@ -84,6 +99,7 @@ public final class DiscordChat extends JavaPlugin implements ExtendedAPI {
     public static boolean connectHook() {
         ConnectorAPIHook hook = PlayerRoleCheckerAPI.getConnectorAPI();
         final boolean connected = hook != null;
+
 
         if (connected) {
             connectedHook = hook;
@@ -117,6 +133,10 @@ public final class DiscordChat extends JavaPlugin implements ExtendedAPI {
     @Override //Todo Add UpdateAlerts
     public UpdateAlert getUpdateAlert() {
         return null;
+    }
+
+    public GenerateType getGenerateType() {
+        return generateType;
     }
 
     @Override

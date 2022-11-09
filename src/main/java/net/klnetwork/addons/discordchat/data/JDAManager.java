@@ -35,7 +35,7 @@ public class JDAManager {
     }
 
     public JDA getJDA() {
-        return isLocalJDA ? localJDA : DiscordChat.getInstance().getJDA();
+        return isLocalJDA ? localJDA : DiscordChat.getConnectedHook().getJDA();
     }
 
     public JDA getLocalJDA() {

@@ -11,12 +11,12 @@ global-settings:
   ## [Performance] スキンを生成する方法
   ##- LINK 誰かのHTTPに依存してDiscordを見たプレイヤーに処理してもらいます！
   ##- LOCAL ローカルで生成します (HTTPリクエストが必要になります！)
+  ##- LOCAL はサーバーのバージョンによってエラーが発生する場合があります！
   currentSkinGenerate: 'LINK'
-  bedrock-editions-avator-link: ''
-  java-editions-avator-link: ''
+  bedrock-editions-avatar-link: 'https://api.tydiumcraft.net/v1/players/skin?uuid=%uuid%&type=avatar'
+  java-editions-avatar-link: 'https://crafatar.com/avatars/%uuid%'
   ## ディスコードトークンを設定したい場合は設定可能です
   ## ただし、通常はプレイヤーロールチェッカーから取得されているため設定は不要です
-  ## 通常は空白
   discord-token: ''
   ## プレイヤーロールチェッカーに接続しないかを設定できます
   ## これを設定する場合は、cache-playerdata、get-playerdataなどをfalseにして
@@ -50,24 +50,26 @@ log:
       chat: true
       ## チャットがプラグインによってキャンセルされた場合に送信しないようにするか
       ignore-canceled-chat: true
-    channelId: 'CHANNEL_ID_HERE'
+    channelId: TEXT_CHANNEL_ID_HERE
   operator-log:
     advanced-settings:
       ## ONにするもの以外省略可能
       console-log: true
       console-command: true
-    channelId: 'CHANNEL_ID_HERE'
+    channelId: TEXT_CHANNEL_ID_HERE
 messages:
   success-hook: '&aプレイヤーロールコネクターの接続に成功しました！'
   cannot-find-hook: '&cプレイヤーロールコネクターに接続に失敗しました・・・！'
   ## %name% - 登録成功した名前
   success-register: '%name% の登録に成功しました'
   text-channel-id-zero: 'テキストチャンネルのIDがゼロです！'
+  ## [Discord] - マインクラフトのコンソールをディスコードに送信します
   ## %date% - コンソールの日付
   ## %level% - メッセージのレベル
   ## %logger_name% - ロガーの名前 [例: [DiscordChat]]
   ## %msg% - メッセージ
   console-log: '[%date% %level%]: %logger_name% %msg%'
+  ## [Minecraft] - ディスコードのチャットをマインクラフトに送信します
   ## %name% - ディスコードのプレイヤー名 [例: Kouta1212]
   ## %display_name% - ディスコードのディスプレイ名 [例: こうた]
   ## %full_name% - ディスコードのプレイヤー名 [例: Kouta1212#0001]
@@ -75,7 +77,25 @@ messages:
   ## %color% - ロールのカラーをマインクラフトで再現 (Require Minecraft 1.16+)
   ## %msg% - メッセージ
   chat-message: '%display_name% > %msg% [%full_name% |%color% %top_level_role%&f]'
-  ## 登録されている場合のメッセージ getPlayerData をtrueにする場合に使うことが可能です
-  chat-message-registered: '[Verified]%display_name% > %msg% [%full_name% |%color% %top_level_role%&f]'
-  ## ロールがない場合に使われる
+  ## [Minecraft] プレイヤーロールチェッカーに登録されている場合のメッセージ
+  ## global-settingsのgetPlayerDataをtrueにする場合に使用可能です
+  chat-message-registered: '[Verified] %display_name% > %msg% [%full_name% |%color% %top_level_role%&f]'
+  ## [Minecraft] - ディスコードのロールがない場合に使われます
   non-role: 'N/A'
+  ## [Discord] - マインクラフトのチャットをディスコードに送信します
+  ## %name% - マインクラフトのプレイヤー名
+  ## %msg% - コマンド内容
+  ## %avatar% - アバターのイメージ
+  command-message: '[Command] %name% > %msg%'
+  ## [Discord] - マインクラフトの参加をディスコードに送信します
+  join-message:
+    ## スキンを生成する方法がローカルになっている場合、スキンを生成するか
+    generate: true
+    title: '%avatar% %name% がサーバーに参加しました！'
+    color: 'GREEN'
+  ## [Discord] - マインクラフトの退出をディスコードに送信します
+  left-message:
+    ## スキンを生成する方法がローカルになっている場合、スキンを生成するか
+    generate: true
+    title: '%avatar% %name% がサーバーから退出しました！'
+    color: 'RED'

@@ -2,8 +2,14 @@ package net.klnetwork.addons.discordchat.util;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import net.klnetwork.addons.discordchat.DiscordChat;
+import net.klnetwork.addons.discordchat.api.GenerateType;
+import net.klnetwork.addons.discordchat.data.playerdata.PlayerData;
+import net.klnetwork.addons.discordchat.data.playerdata.PlayerDataManager;
+import net.klnetwork.playerrolechecker.api.utils.CommonUtils;
 import org.bukkit.entity.Player;
 
+import java.awt.image.BufferedImage;
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -11,7 +17,7 @@ import java.util.Base64;
 public class PlayerUtils {
     private static Method CURRENT_GAME_PROFILE_METHOD, CURRENT_PROPERTY_MAP_METHOD, CURRENT_GET_METHOD;
 
-    public static Property getSkinUrl(Player player) {
+    public static Property getProperty(Player player) {
         try {
             Object craftPlayer = player.getClass().getMethod("getHandle").invoke(player);
             if (CURRENT_GAME_PROFILE_METHOD == null) {
@@ -41,6 +47,7 @@ public class PlayerUtils {
         throw new IllegalStateException();
     }
 
+    /* TODO: BETTER METHOD FIND??? */
     private static void findProfile(Object invoke) {
         for (Method method : invoke.getClass().getMethods()) {
             if (method.getParameterCount() == 0 && method.getReturnType().getName().contains("GameProfile")) {
@@ -68,6 +75,18 @@ public class PlayerUtils {
         }
     }
 
+    public static byte[] getHeadSkin(Player player) {
+        if (DiscordChat.getInstance().getGenerateType() == GenerateType.LINK) {
+            return null;
+        } else if (DiscordChat.getInstance().getConfig().getBoolean("global-settings.cache-playerdata")) {
+            PlayerData data = PlayerDataManager.get(player);
+            if (data != null && data.getSkin() != null) {
+                return data.getSkin();
+            }
+        }
+        return getProperty(player).getHeadSkin();
+    }
+
     public static class Property {
         private final String texture, signature;
 
@@ -86,6 +105,21 @@ public class PlayerUtils {
 
         public String toURL() {
             return getJson().get("textures").getAsJsonObject().get("SKIN").getAsJsonObject().get("url").getAsString();
+        }
+
+        private BufferedImage getHeadSkin(BufferedImage skin) {
+            if (skin == null) {
+                throw new IllegalStateException();
+            }
+
+            BufferedImage head = skin.getSubimage(8, 8, 8, 8);
+            skin.flush();
+
+            return head;
+        }
+
+        public byte[] getHeadSkin() {
+            return CommonUtils.toByteArray(getHeadSkin(CommonUtils.getImages(toURL())));
         }
 
         public String getSignature() {

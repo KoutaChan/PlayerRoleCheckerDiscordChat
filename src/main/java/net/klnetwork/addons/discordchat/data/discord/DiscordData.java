@@ -2,6 +2,7 @@ package net.klnetwork.addons.discordchat.data.discord;
 
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.klnetwork.addons.discordchat.DiscordChat;
+import net.klnetwork.addons.discordchat.util.LogManager;
 
 public class DiscordData {
     private long textChannelId;
@@ -9,6 +10,10 @@ public class DiscordData {
     private TextChannel channel;
 
     public DiscordData(final long textChannelId, boolean consoleLog, boolean consoleCommand, boolean commandLog, boolean joinLog, boolean leftLog, boolean chatLog, boolean chat) {
+        if (textChannelId == 0) {
+            LogManager.logYaml("text-channel-id-zero");
+            throw new IllegalStateException("Received Zero");
+        }
         this.textChannelId = textChannelId;
         this.consoleLog = consoleLog;
         this.consoleCommand = consoleCommand;

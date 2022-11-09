@@ -42,7 +42,7 @@ public class ConsoleWatcher extends AbstractAppender {
                 , new ReplaceText("%date%", simpleFormat.format(new Date()))
                 , new ReplaceText("%level%", event.getLevel().name())
                 , new ReplaceText("%msg%", ColorUtils.removeConsoleColor(event.getMessage().getFormattedMessage()).replaceAll("\u007F", "\u00a7"))
-                , new ReplaceText("%logger_name%", event.getLoggerName() != null ||
+                , new ReplaceText("%logger_name%", event.getLoggerName() == null ||
                         event.getLoggerName().startsWith("net.minecraft") || event.getLoggerName().isEmpty() || event.getLoggerName().equals("Minecraft")
                         ? "" : "[" + event.getLoggerName() + "]"));
         try {
