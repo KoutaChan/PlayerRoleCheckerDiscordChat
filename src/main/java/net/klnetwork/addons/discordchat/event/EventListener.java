@@ -36,8 +36,8 @@ public class EventListener implements Listener {
         Pair<Object, Boolean> message = ConfigManager.getDiscordYaml("join-message",
                 new ReplaceText("%avatar%", DiscordChat.getInstance().getGenerateType() == GenerateType.LINK
                         ? CommonUtils.isFloodgateUser(event.getPlayer().getUniqueId())
-                        ? ConfigManager.getYaml("bedrock-editions-avatar-link")
-                        : ConfigManager.getYaml("java-editions-avatar-link")
+                        ? ConfigManager.getYamlGlobal("global-settings.bedrock-editions-avatar-link")
+                        : ConfigManager.getYamlGlobal("global-settings.java-editions-avatar-link")
                         : "attachment://avatar.png"),
                 new ReplaceText("%name%", event.getPlayer().getName()),
                 new ReplaceText("%uuid%", event.getPlayer().getUniqueId().toString()));
@@ -56,8 +56,8 @@ public class EventListener implements Listener {
             Pair<Object, Boolean> message = ConfigManager.getDiscordYaml("left-message",
                     new ReplaceText("%avatar%", DiscordChat.getInstance().getGenerateType() == GenerateType.LINK
                             ? CommonUtils.isFloodgateUser(event.getPlayer().getUniqueId())
-                            ? ConfigManager.getYaml("bedrock-editions-avatar-link")
-                            : ConfigManager.getYaml("java-editions-avatar-link")
+                            ? ConfigManager.getYamlGlobal("global-settings.bedrock-editions-avatar-link")
+                            : ConfigManager.getYamlGlobal("global-settings.java-editions-avatar-link")
                             : "attachment://avatar.png"),
                     new ReplaceText("%name%", event.getPlayer().getName()),
                     new ReplaceText("%uuid%", event.getPlayer().getUniqueId().toString()));
@@ -81,8 +81,8 @@ public class EventListener implements Listener {
             Pair<Object, Boolean> message = ConfigManager.getDiscordYaml("command-message",
                     new ReplaceText("%avatar%", DiscordChat.getInstance().getGenerateType() == GenerateType.LINK
                             ? CommonUtils.isFloodgateUser(event.getPlayer().getUniqueId())
-                            ? ConfigManager.getYaml("bedrock-editions-avatar-link")
-                            : ConfigManager.getYaml("java-editions-avatar-link")
+                            ? ConfigManager.getYamlGlobal("global-settings.bedrock-editions-avatar-link")
+                            : ConfigManager.getYamlGlobal("global-settings.java-editions-avatar-link")
                             : "attachment://avatar.png"),
                     new ReplaceText("%name%", event.getPlayer().getName()),
                     new ReplaceText("%uuid%", event.getPlayer().getUniqueId().toString()),

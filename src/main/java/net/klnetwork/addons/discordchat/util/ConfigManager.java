@@ -15,10 +15,14 @@ public class ConfigManager {
     public static String MESSAGE_PREFIX = "messages.";
 
     public static String getYaml(String yaml, ReplaceText... texts) {
-        String text = DiscordChat.getInstance().getConfig().getString(MESSAGE_PREFIX + yaml);
+        return getYamlGlobal(MESSAGE_PREFIX + yaml, texts);
+    }
+
+    public static String getYamlGlobal(String yaml, ReplaceText... texts) {
+        String text = DiscordChat.getInstance().getConfig().getString(yaml);
 
         if (text == null) {
-            return "N/A" + MESSAGE_PREFIX + yaml + "!";
+            return "N/A: " + yaml + "!";
         }
 
         return toText(ChatColor.translateAlternateColorCodes('&', text), texts);
@@ -36,8 +40,6 @@ public class ConfigManager {
             return Pair.of(getYaml(yaml, texts), false);
         } else {
             ConfigurationSection section = DiscordChat.getInstance().getConfig().getConfigurationSection(MESSAGE_PREFIX + yaml);
-
-            System.out.println(getString(section, "image", texts));
 
             return Pair.of(new EmbedBuilder() {{
                 setColor(getColor(section.getString("color")));
